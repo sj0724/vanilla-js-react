@@ -1,4 +1,4 @@
-import { createElement } from '../dom/client';
+import { render } from '../dom';
 import { pathToRegex } from './utils';
 
 export type Component = (props?: Record<string, any>) => any;
@@ -42,7 +42,6 @@ const spaRouter = () => {
         const [pathname, params] = segments[0].match(regex) || [];
         //6. 매칭이 된게 없으면 넘어갑니다.
         if (!pathname) continue;
-        console.log(segments);
         //7. segments의 길이가 1인 경우엔 더이상 탐색할게 없으므로 매칭된 component를 반환한다.
         if (segments.length === 1) {
           return { Component: element, params };
@@ -69,10 +68,7 @@ const spaRouter = () => {
     } else {
       pageParams = params;
       if (routeInfo.root) {
-        while (routeInfo.root.firstChild) {
-          routeInfo.root.removeChild(routeInfo.root.firstChild);
-        }
-        routeInfo.root.appendChild(createElement(Component()));
+        render(routeInfo.root, Component);
       } else {
         throw new Error('root element is empty');
       }

@@ -1,11 +1,11 @@
+import { Component } from '../router';
+
 export type VNode = string | number | VDOM | null | undefined;
 export type VDOM = {
-  tag: string;
+  type: string;
   props: Record<string, any> | null;
   children: VNode[];
 };
-
-type Component = (props?: Record<string, any>) => VDOM;
 
 export const h = (
   component: string | Component,
@@ -16,7 +16,7 @@ export const h = (
     return component({ ...props, children });
   }
   return {
-    tag: component,
+    type: component,
     props,
     children: children.flat(),
   };
