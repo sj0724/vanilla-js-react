@@ -14,6 +14,7 @@ const createElement = (node: VNode) => {
   }
 
   const element = document.createElement(node.type);
+  console.log(element);
 
   Object.entries(node.props || {}).forEach(([attr, value]) => {
     if (attr.startsWith('data-')) {

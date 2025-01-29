@@ -1,14 +1,17 @@
+import { useState } from '@/lib/dom';
+
 const MainPage = () => {
+  const [count, setCount] = useState(0);
+
+  const handleButtonClick = () => {
+    setCount(count + 1);
+  };
+
   return (
     <div>
-      <h2>MainPage</h2>
-      <a data-link href='/dashboard'>
-        go DashBoard
-      </a>
-      &nbsp;&nbsp;
-      <a data-link href='/detail/1'>
-        go Detail
-      </a>
+      <button onclick={handleButtonClick}>버튼</button>
+      <p>{count}</p>
+      <p>test</p>
     </div>
   );
 };

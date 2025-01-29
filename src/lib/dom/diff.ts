@@ -2,18 +2,15 @@ import { VNode } from '@/lib/jsx/jsx-runtime';
 import { createElement } from './client';
 
 const diffTextVDOM = (newVDOM: VNode, currentVDOM: VNode) => {
-  if (typeof newVDOM === 'number' && typeof currentVDOM === 'string')
-    return true;
-  if (typeof newVDOM === 'string' && typeof currentVDOM === 'number')
-    return true;
-  if (typeof newVDOM === 'number' && typeof currentVDOM === 'number')
-    return true;
-  if (typeof newVDOM === 'string' && typeof currentVDOM === 'string') {
-    return true;
+  if (typeof newVDOM !== typeof currentVDOM) {
+    return true; // 타입이 다르면 무조건 다름
   }
-  if (newVDOM === currentVDOM) return false;
 
-  return false;
+  if (typeof newVDOM === 'string' || typeof newVDOM === 'number') {
+    return newVDOM !== currentVDOM; // 값이 다를 때만 true
+  }
+
+  return false; // 기본적으로 같다고 가정
 };
 
 function updateAttributes(
@@ -56,8 +53,6 @@ const updateElement = (
     newVDOM !== null &&
     newVDOM !== undefined &&
     (currentVDOM === null || currentVDOM === undefined);
-
-  console.log(currentVDOM);
 
   //1.
   if (parent.childNodes) {
